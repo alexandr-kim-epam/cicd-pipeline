@@ -25,12 +25,11 @@ pipeline {
     stage('Node.js App Build') {
         steps {
             script {
-                def trainingCicdDockerfilePath = 'Dockerfile'
-                sh "docker build -t kim26557/training_cicd:$BUILD_NUMBER -f ${trainingCicdDockerfilePath} ."
+                sh "sudo docker build -t kim26557/training_cicd:$BUILD_NUMBER ."
                 sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin docker.io'
-                sh 'docker push kim26557/training_cicd:$BUILD_NUMBER'
-                sh 'docker logout'
-                sh "docker run -d -p 3000:3000 --name training_cicd-container kim26557/training_cicd:$BUILD_NUMBER"
+                sh 'sudo docker push kim26557/training_cicd:$BUILD_NUMBER'
+                sh 'sudo docker logout'
+                sh "sudo docker run -d -p 3000:3000 --name training_cicd-container kim26557/training_cicd:$BUILD_NUMBER"
             }
         }
     }    
