@@ -29,7 +29,6 @@ pipeline {
                 sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin docker.io'
                 sh 'docker push kim26557/test_image'
                 sh 'docker logout'
-                // sh "docker run -d -p 3000:3000 --name nodeapp-container alexandr-kim-epam/nodeapp:$BUILD_NUMBER"
             }
         }
     }    
