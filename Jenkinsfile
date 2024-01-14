@@ -24,7 +24,7 @@ pipeline {
     
     stage('Docker Build') {
       steps {
-        sh 'docker build -t kim26557/training_cicd:${BUILD_NUMBER} .'
+        dockerImage = docker.build("kim26557/training_cicd:latest")
       }
     } 
     /**stage('Node.js App Build') {
