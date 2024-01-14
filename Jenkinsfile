@@ -7,6 +7,18 @@ pipeline {
       }
     }
 
+    stage('App Build') {
+      steps {
+        sh 'script scripts/build.sh'
+      }
+    }
+
+    stage('Tests') {
+      steps {
+        sh 'script scripts/test.sh'
+      }
+    }
+
   }
   environment {
     DOCKERHUB_CREDENTIALS = 'dhtraining'
