@@ -21,7 +21,7 @@ pipeline {
         sh 'script scripts/test.sh'
       }
     }
-    
+
     stage('Node.js App Build') {
         steps {
             script {
