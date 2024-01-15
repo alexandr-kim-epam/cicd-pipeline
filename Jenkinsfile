@@ -1,5 +1,10 @@
 pipeline {
-  agent any
+  agent {
+    node { label 'slavefordocker'}  
+  }
+  environment {
+    DOCKERHUB_CREDENTIALS = credentials('docker_hub_cred')
+  }
   stages {
     stage('Git Checkout') {
       steps {
@@ -31,8 +36,5 @@ pipeline {
       }
     }
 
-  }
-  environment {
-    DOCKERHUB_CREDENTIALS = credentials('docker_hub_cred')
   }
 }
