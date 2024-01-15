@@ -3,7 +3,7 @@ pipeline {
   stages {
     stage('Git Checkout') {
       steps {
-        git(branch: 'main', url: 'https://github.com/alexandr-kim-epam/cicd-pipeline.git', credentialsId: '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')
+        git(branch: 'main', url: 'https://github.com/alexandr-kim-epam/cicd-pipeline.git', credentialsId: 'git_jenkins')
       }
     }
 
