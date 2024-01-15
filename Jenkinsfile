@@ -1,12 +1,9 @@
 pipeline {
   agent any
-  environment {
-    DOCKERHUB_CREDENTIALS = 'dhtraining'
-  }  
   stages {
     stage('Git Checkout') {
       steps {
-        git branch: 'main', url: 'https://github.com/alexandr-kim-epam/cicd-pipeline.git'
+        git(branch: 'main', url: 'https://github.com/alexandr-kim-epam/cicd-pipeline.git')
       }
     }
 
@@ -21,22 +18,21 @@ pipeline {
         sh 'script scripts/test.sh'
       }
     }
-    
-    /**stage('Docker Build') {
-      dockerImage = docker.build("kim26557/training_cicd:latest")
-    } **/
-    
+
     stage('Node.js App Build') {
-        steps {
-            script {
-                sh 'docker build -t kim26557/training_cicd:${BUILD_NUMBER} .'
-                sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin docker.io'
-                sh 'docker push kim26557/training_cicd:$BUILD_NUMBER'
-                sh 'docker logout'
-                //sh 'docker run -d -p 3000:3000 --name training_cicd-container kim26557/training_cicd:${BUILD_NUMBER}'
-            }
+      steps {
+        script {
+          sh 'docker build -t kim26557/training_cicd:${BUILD_NUMBER} .'
+          sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin docker.io'
+          sh 'docker push kim26557/training_cicd:$BUILD_NUMBER'
+          sh 'docker logout'
         }
-    }   
-  
+
+      }
+    }
+
+  }
+  environment {
+    DOCKERHUB_CREDENTIALS = 'dhtraining'
   }
 }
