@@ -3,7 +3,7 @@ pipeline {
   stages {
     stage('Git Checkout') {
       steps {
-        git(branch: 'main', url: 'https://github.com/alexandr-kim-epam/cicd-pipeline.git', credentialsId: 'git_jenkins')
+        git(branch: 'main', url: 'https://github.com/alexandr-kim-epam/cicd-pipeline.git', credentialsId: 'git_cred')
       }
     }
 
@@ -23,7 +23,7 @@ pipeline {
       steps {
         script {
           sh 'docker build -t kim26557/training_cicd:${BUILD_NUMBER} .'
-          sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin docker.io'
+          sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
           sh 'docker push kim26557/training_cicd:$BUILD_NUMBER'
           sh 'docker logout'
         }
